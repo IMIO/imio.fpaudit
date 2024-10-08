@@ -9,12 +9,12 @@ class HiddenProfiles(object):
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller."""
         return [
-            "imio.fp_audit:uninstall",
+            "imio.fpaudit:uninstall",
         ]
 
     def getNonInstallableProducts(self):
         """Hide the upgrades package from site-creation and quickinstaller."""
-        return ["imio.fp_audit.upgrades"]
+        return ["imio.fpaudit.upgrades"]
 
 
 def post_install(context):
