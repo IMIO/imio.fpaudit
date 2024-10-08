@@ -43,7 +43,8 @@ setup(
     install_requires=[
         'plone.api',
         'setuptools',
-        'imio.helpers',
+        'collective.fingerpointing',
+        'collective.documentgenerator',
     ],
     extras_require={
         'test': [

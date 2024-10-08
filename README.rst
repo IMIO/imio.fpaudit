@@ -26,7 +26,6 @@
     :target: https://pypi.python.org/pypi/imio.fpaudit/
     :alt: License
 
-
 =============
 imio.fpaudit
 =============
@@ -36,21 +35,8 @@ Fingerpointing log audit helper
 Features
 --------
 
-- Can be bullet points
-
-
-Examples
---------
-
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
-
-
-Documentation
--------------
-
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
-
+- based on defined log (see installation here after)
+-
 
 Translations
 ------------
@@ -58,7 +44,6 @@ Translations
 This product has been translated into
 
 - Klingon (thanks, K'Plai)
-
 
 Installation
 ------------
@@ -72,38 +57,21 @@ Install imio.fpaudit by adding it to your buildout::
     eggs =
         imio.fpaudit
 
+It is also necessary to include some config lines in instance zope.conf or in buildout config
+
+    [instance]
+    zope-conf-additional +=
+        <product-config collective.fingerpointing>
+            audit-log ${buildout:directory}/var/log/fpaudit.log
+        </product-config>
 
 and then running ``bin/buildout``
-
-
-Authors
--------
-
-Provided by awesome people ;)
-
-
-Contributors
-------------
-
-Put your name here, you deserve it!
-
-- ?
-
 
 Contribute
 ----------
 
 - Issue Tracker: https://github.com/imio/imio.fpaudit/issues
 - Source Code: https://github.com/imio/imio.fpaudit
-- Documentation: https://docs.plone.org/foo/bar
-
-
-Support
--------
-
-If you are having issues, please let us know.
-We have a mailing list located at: project@example.com
-
 
 License
 -------
