@@ -5,29 +5,30 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="imio.fpaudit">
 
-  <genericsetup:registerProfile
-      name="default"
-      title="imio.fpaudit"
-      directory="profiles/default"
-      description="Installs the imio.fpaudit add-on."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      post_handler=".setuphandlers.post_install"
-      />
+    <include package="plone.app.controlpanel" file="permissions.zcml" />
+    <include package=".browser" />
 
-  <genericsetup:registerProfile
-      name="uninstall"
-      title="imio.fpaudit (uninstall)"
-      directory="profiles/uninstall"
-      description="Uninstalls the imio.fpaudit add-on."
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      post_handler=".setuphandlers.uninstall"
-      />
+    <genericsetup:registerProfile
+        name="default"
+        title="imio.fpaudit"
+        directory="profiles/default"
+        description="Installs the imio.fpaudit add-on."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        post_handler=".setuphandlers.post_install"
+        />
 
-  <utility
-      factory=".setuphandlers.HiddenProfiles"
-      name="imio.fpaudit-hiddenprofiles"
-      />
+    <genericsetup:registerProfile
+        name="uninstall"
+        title="imio.fpaudit (uninstall)"
+        directory="profiles/uninstall"
+        description="Uninstalls the imio.fpaudit add-on."
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        post_handler=".setuphandlers.uninstall"
+        />
 
-  <!-- -*- extra stuff goes here -*- -->
+    <utility
+        factory=".setuphandlers.HiddenProfiles"
+        name="imio.fpaudit-hiddenprofiles"
+        />
 
 </configure>
