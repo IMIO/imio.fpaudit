@@ -2,6 +2,6 @@
 <layers>
   <layer
       name="imio.fpaudit"
-      interface="imio.fpaudit.interfaces.IImioFpAuditLayer"
+      interface="imio.fpaudit.interfaces.IImioFPAuditLayer"
       />
 </layers>
