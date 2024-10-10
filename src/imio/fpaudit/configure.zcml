@@ -5,6 +5,9 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="imio.fpaudit">
 
+    <include package="collective.fingerpointing" />
+    <include package="collective.documentgenerator" />
+
     <include package="plone.app.controlpanel" file="permissions.zcml" />
     <include package=".browser" />
 

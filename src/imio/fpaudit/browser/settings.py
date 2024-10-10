@@ -71,14 +71,6 @@ class IFPAuditSettings(Interface):
                     )
                 )
             ids.append(entry["log_id"])
-            if not entry["audit_log"].strip():
-                raise Invalid(
-                    _(u"You must provide a value for audit file name"),
-                )
-            if not entry["log_format"].strip():
-                raise Invalid(
-                    _(u"You must provide a value for audit log format"),
-                )
 
 
 class FPAuditSettings(RegistryEditForm):
