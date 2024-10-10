@@ -11,4 +11,9 @@
         class=".settings.FPAuditSettingsView"
         />
 
+    <subscriber
+        for="plone.registry.interfaces.IRecordModifiedEvent"
+        handler=".settings.settings_changed"
+        />
+
 </configure>

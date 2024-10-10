@@ -14,7 +14,7 @@
         directory="profiles/default"
         description="Installs the imio.fpaudit add-on."
         provides="Products.GenericSetup.interfaces.EXTENSION"
-        post_handler=".setuphandlers.post_install"
+        post_handler="imio.fpaudit.setuphandlers.post_install"
         />
 
     <genericsetup:registerProfile
@@ -23,12 +23,17 @@
         directory="profiles/uninstall"
         description="Uninstalls the imio.fpaudit add-on."
         provides="Products.GenericSetup.interfaces.EXTENSION"
-        post_handler=".setuphandlers.uninstall"
+        post_handler="imio.fpaudit.setuphandlers.uninstall"
         />
 
     <utility
-        factory=".setuphandlers.HiddenProfiles"
+        factory="imio.fpaudit.setuphandlers.HiddenProfiles"
         name="imio.fpaudit-hiddenprofiles"
+        />
+
+    <utility
+        provides="imio.fpaudit.interfaces.ILogsStorage"
+        factory="imio.fpaudit.storage.LogsStorageUtility"
         />
 
 </configure>

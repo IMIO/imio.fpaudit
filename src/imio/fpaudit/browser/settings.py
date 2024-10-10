@@ -1,16 +1,23 @@
 # -*- coding: utf-8 -*-
+from collective.fingerpointing.logger import LogInfo
 from collective.z3cform.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.registry import DictRow
 from imio.fpaudit import _
+from imio.fpaudit import LOG_DIR
+from imio.fpaudit.interfaces import ILogsStorage
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.autoform.directives import widget
+from plone.registry.interfaces import IRecordModifiedEvent
 from plone.z3cform import layout
 from z3c.form.validator import NoInputData
 from zope import schema
+from zope.component import getUtility
 from zope.interface import Interface
 from zope.interface import Invalid
 from zope.interface import invariant
+
+import os
 
 
 class ILogInfoSchema(Interface):
@@ -20,7 +27,7 @@ class ILogInfoSchema(Interface):
     )
 
     audit_log = schema.TextLine(
-        title=_("Audit log name"),
+        title=_("Audit file name"),
         description=_("Will be located in var/log"),
         required=True,
     )
@@ -64,6 +71,14 @@ class IFPAuditSettings(Interface):
                     )
                 )
             ids.append(entry["log_id"])
+            if not entry["audit_log"].strip():
+                raise Invalid(
+                    _(u"You must provide a value for audit file name"),
+                )
+            if not entry["log_format"].strip():
+                raise Invalid(
+                    _(u"You must provide a value for audit log format"),
+                )
 
 
 class FPAuditSettings(RegistryEditForm):
@@ -74,3 +89,21 @@ class FPAuditSettings(RegistryEditForm):
 
 
 FPAuditSettingsView = layout.wrap_form(FPAuditSettings, ControlPanelFormWrapper)
+
+
+def settings_changed(event):
+    """Manage a record change"""
+    if (
+        IRecordModifiedEvent.providedBy(event)
+        and event.record.interfaceName
+        and event.record.interface != IFPAuditSettings
+    ):
+        return
+    if event.record.fieldName == "log_entries":
+        dic = {}
+        for entry in event.record.value:
+            log_i = LogInfo({"audit-log": os.path.join(LOG_DIR, entry["audit_log"])}, logformat=entry["log_format"])
+            log_i.handler.formatter.datefmt = "%y-%m-%d %H:%M:%S"
+            dic[entry["log_id"]] = log_i
+        storage = getUtility(ILogsStorage)
+        storage.set(dic)
