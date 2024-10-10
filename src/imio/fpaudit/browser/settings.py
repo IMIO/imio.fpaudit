@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from collective.fingerpointing.logger import LogInfo
 from collective.z3cform.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.registry import DictRow
 from imio.fpaudit import _
 from imio.fpaudit import LOG_DIR
 from imio.fpaudit.interfaces import ILogsStorage
+from imio.fpaudit.logger import FPAuditLogInfo
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.autoform.directives import widget
@@ -102,7 +102,11 @@ def settings_changed(event):
     if event.record.fieldName == "log_entries":
         dic = {}
         for entry in event.record.value:
-            log_i = LogInfo({"audit-log": os.path.join(LOG_DIR, entry["audit_log"])}, logformat=entry["log_format"])
+            log_i = FPAuditLogInfo(
+                {"audit-log": os.path.join(LOG_DIR, entry["audit_log"])},
+                entry["log_id"],
+                logformat=entry["log_format"],
+            )
             log_i.handler.formatter.datefmt = "%y-%m-%d %H:%M:%S"
             dic[entry["log_id"]] = log_i
         storage = getUtility(ILogsStorage)
