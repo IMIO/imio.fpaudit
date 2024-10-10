@@ -9,4 +9,4 @@ class FPAuditLogInfo(LogInfo):
         self.logger = logging.getLogger("fpa_{}".format(log_id))
         self.logfile = None
         self.handler = None
-        self.configure(config)
+        self.configure(config, logformat=logformat)
