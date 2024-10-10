@@ -8,6 +8,7 @@ from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 
 import imio.fpaudit
+import os
 
 
 class ImioFPAuditLayer(PloneSandboxLayer):
@@ -35,3 +36,16 @@ IMIO_FPAUDIT_INTEGRATION_TESTING = IntegrationTesting(
 IMIO_FPAUDIT_FUNCTIONAL_TESTING = FunctionalTesting(
     bases=(IMIO_FPAUDIT_FIXTURE,), name="ImioFPAuditLayer:FunctionalTesting"
 )
+
+
+def write_temp_files(temp_dir, filenames):
+    for filename in filenames:
+        with open(os.path.join(temp_dir, filename), "w") as f:
+            f.write("test")
+
+
+def clear_temp_dir(temp_dir):
+    for filename in os.listdir(temp_dir):
+        file_path = os.path.join(temp_dir, filename)
+        if os.path.isfile(file_path):
+            os.remove(file_path)
