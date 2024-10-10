@@ -35,8 +35,8 @@ Fingerpointing log audit helper
 Features
 --------
 
-- based on defined log (see installation here after)
--
+- logs can be defined in a plone configlet
+- an helper method `utils.fplog` can be used to write to a defined log file
 
 Translations
 ------------
@@ -57,13 +57,14 @@ Install imio.fpaudit by adding it to your buildout::
     eggs =
         imio.fpaudit
 
-It is also necessary to include some config lines in instance zope.conf or in buildout config
+It is also necessary to include some config lines in instance zope.conf or in buildout config,
+where xxx is the path to the plone site
 
     [instance]
     zope-conf-additional +=
-        <product-config collective.fingerpointing>
-            audit-log ${buildout:directory}/var/log/fpaudit.log
-        </product-config>
+       <product-config imio.fpaudit>
+         plone-path xxx
+       </product-config>
 
 and then running ``bin/buildout``
 

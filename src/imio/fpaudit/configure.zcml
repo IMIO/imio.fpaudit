@@ -39,4 +39,9 @@
         factory="imio.fpaudit.storage.LogsStorageUtility"
         />
 
+    <subscriber
+        for="zope.processlifetime.IProcessStarting"
+        handler="imio.fpaudit.subscribers.zope_ready"
+        />
+
 </configure>

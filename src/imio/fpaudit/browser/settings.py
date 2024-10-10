@@ -2,9 +2,7 @@
 from collective.z3cform.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.registry import DictRow
 from imio.fpaudit import _
-from imio.fpaudit import LOG_DIR
-from imio.fpaudit.interfaces import ILogsStorage
-from imio.fpaudit.logger import FPAuditLogInfo
+from imio.fpaudit.storage import store_config
 from plone.app.registry.browser.controlpanel import ControlPanelFormWrapper
 from plone.app.registry.browser.controlpanel import RegistryEditForm
 from plone.autoform.directives import widget
@@ -12,12 +10,9 @@ from plone.registry.interfaces import IRecordModifiedEvent
 from plone.z3cform import layout
 from z3c.form.validator import NoInputData
 from zope import schema
-from zope.component import getUtility
 from zope.interface import Interface
 from zope.interface import Invalid
 from zope.interface import invariant
-
-import os
 
 
 class ILogInfoSchema(Interface):
@@ -92,14 +87,4 @@ def settings_changed(event):
     ):
         return
     if event.record.fieldName == "log_entries":
-        dic = {}
-        for entry in event.record.value:
-            log_i = FPAuditLogInfo(
-                {"audit-log": os.path.join(LOG_DIR, entry["audit_log"])},
-                entry["log_id"],
-                logformat=entry["log_format"],
-            )
-            log_i.handler.formatter.datefmt = "%y-%m-%d %H:%M:%S"
-            dic[entry["log_id"]] = log_i
-        storage = getUtility(ILogsStorage)
-        storage.set(dic)
+        store_config(event.record.value)

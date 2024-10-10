@@ -4,7 +4,7 @@
 .installed.cfg
 .mr.developer.cfg
 .plone-version
-.plone.versioncheck.tracked.json
+.plone.versioncheck*
 .project
 .pydevproject
 .settings/
