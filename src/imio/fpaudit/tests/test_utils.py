@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from imio.fpaudit import LOG_DIR
 from imio.fpaudit.storage import store_config
 from imio.fpaudit.testing import clear_temp_dir
@@ -22,12 +23,12 @@ class TestUtils(unittest.TestCase):
 
     def setUp(self):
         self.portal = self.layer["portal"]
+
+    def test_fplog(self):
         api.portal.set_registry_record(
             "imio.fpaudit.settings.log_entries",
             [{"log_id": u"test", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}],
         )
-
-    def test_fplog(self):
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
@@ -59,11 +60,25 @@ class TestUtils(unittest.TestCase):
             os.remove(fil)
 
     def test_get_lines_info(self):
-        pass
-        line = "24-10-10 14:59:07 - user=admin ip=127.0.0.1 action=AUDIT col_a=xxxx col_b=yyy"
+        line = "2024-10-10 14:59:07 - user=admin ip=127.0.0.1 action=AUDIT col_a=xx  xx col_b=yyy éé"
         dic = get_lines_info(line, ["col_a", "col_b"])
+        self.assertDictEqual(
+            dic,
+            {
+                "date": "2024-10-10 14:59:07",
+                "user": "admin",
+                "ip": "127.0.0.1",
+                "action": "AUDIT",
+                "col_a": "xx  xx",
+                "col_b": "yyy éé",
+            },
+        )
 
     def test_get_lines_of(self):
+        api.portal.set_registry_record(
+            "imio.fpaudit.settings.log_entries",
+            [{"log_id": u"test", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}],
+        )
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
@@ -81,6 +96,8 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(len(lines), 4)
         self.assertEqual(len([ln for ln in lines if "AUDIT" in ln]), 2)
         self.assertEqual(len([ln for ln in lines if "CONTACTS" in ln]), 2)
+        for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
+            os.remove(fil)
 
     def test_get_logrotate_filenames(self):
         temp_dir = tempfile.mkdtemp()
