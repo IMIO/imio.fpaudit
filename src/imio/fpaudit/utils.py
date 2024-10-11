@@ -4,6 +4,7 @@ from collective.fingerpointing.utils import get_request_information
 from file_read_backwards import FileReadBackwards
 from imio.fpaudit.interfaces import ILogsStorage
 from natsort import natsorted
+from plone import api
 from zope.component import getUtility
 
 import logging
@@ -29,13 +30,38 @@ def fplog(log_id, action, extras):
         logger.info(AUDIT_MESSAGE.format(user, ip, action, extras))
 
 
-def get_all_lines_of(logfiles):
+def get_all_lines_of(logfiles, actions=()):
     """Get all lines of a list of log files.
 
-    :param logfiles: The list of log files"""
+    :param logfiles: The list of log files
+    :param actions: An action list to search_on"""
     for logfile in logfiles:
-        for line in get_lines_of(logfile):
+        for line in get_lines_of(logfile, actions=actions):
             yield line
+
+
+def get_lines_info(line, extras):
+    """Get the columns info of a log line.
+
+    :param line: The log line
+    :param extras: The extras tags list
+    :return: A dictionary with the columns info"""
+    dic = {}
+    # 24-10-10 14:59:07 - user=admin ip=127.0.0.1 action=AUDIT col_a=xxxx col_b=yyy
+    pattern = (
+        r"(?P<date>\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) - user=(?P<user>.+?) "
+        r"ip=(?P<ip>[\d\.]+|None) action=(?P<action>.+?)"
+    )
+
+    for extra in extras:
+        pattern += r" {}=(?P<{}>.+?)".format(extra, extra)
+
+    match = re.match(pattern, line)
+    if match:
+        dic = match.groupdict()
+    else:
+        dic["_line_"] = line
+    return dic
 
 
 def get_lines_of(logfile, actions=()):
@@ -49,6 +75,17 @@ def get_lines_of(logfile, actions=()):
             s_line = line.strip("\n")
             if not actions or any(act in s_line for act in acts):
                 yield s_line
+
+
+def get_log_option(log_id, option):
+    """Get option value from settings
+
+    :param log_id: The log id as defined in the configuration
+    :param option: The option name"""
+    log_entries = api.portal.get_registry_record("imio.fpaudit.settings.log_entries", default=[])
+    for entry in log_entries:
+        if entry["log_id"] == log_id:
+            return entry.get(option)
 
 
 def get_logrotate_filenames(directory, base_filename, suffix_regex=r"\.\d+$", full=True):

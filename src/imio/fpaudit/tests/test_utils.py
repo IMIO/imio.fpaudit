@@ -5,6 +5,7 @@ from imio.fpaudit.testing import IMIO_FPAUDIT_INTEGRATION_TESTING
 from imio.fpaudit.testing import write_temp_files
 from imio.fpaudit.utils import fplog
 from imio.fpaudit.utils import get_all_lines_of
+from imio.fpaudit.utils import get_lines_info
 from imio.fpaudit.utils import get_lines_of
 from imio.fpaudit.utils import get_logrotate_filenames
 from plone import api
@@ -56,6 +57,11 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(lines[3].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 1"))
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
+
+    def test_get_lines_info(self):
+        pass
+        line = "24-10-10 14:59:07 - user=admin ip=127.0.0.1 action=AUDIT col_a=xxxx col_b=yyy"
+        dic = get_lines_info(line, ["col_a", "col_b"])
 
     def test_get_lines_of(self):
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")

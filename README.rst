@@ -37,6 +37,12 @@ Features
 
 - logs can be defined in a plone configlet
 - an helper method `utils.fplog` can be used to write to a defined log file
+- a template (collective.documentgenerator) can be used to generate an ods or xls file from the logs.
+  The template object must define the following context vars:
+
+    * log_id: the id of the log to use
+    * actions: a list of actions to filter on (ex: AUDIT,ERROR)
+    * extras: a list of extra fields to use in the template (ex: col_a,col_b)
 
 Translations
 ------------
