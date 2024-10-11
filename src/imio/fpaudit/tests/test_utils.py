@@ -34,11 +34,11 @@ class TestUtils(unittest.TestCase):
         logs = get_logrotate_filenames(LOG_DIR, "test_utils.log", r"\.\d+$")
         self.assertListEqual(logs, [log_file_path])
         lines = [ln for ln in get_lines_of(log_file_path)]
-        self.assertEqual(len(list(lines)), 1)
+        self.assertEqual(len(lines), 1)
         self.assertTrue(lines[0].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 1"))
         fplog("test", "AUDIT", "extra 2")
         lines = [ln for ln in get_lines_of(log_file_path)]
-        self.assertEqual(len(list(lines)), 2)
+        self.assertEqual(len(lines), 2)
         self.assertTrue(lines[0].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 2"))
         self.assertTrue(lines[1].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 1"))
         # check with logrotated files
@@ -56,6 +56,25 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(lines[3].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 1"))
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
+
+    def test_get_lines_of(self):
+        log_file_path = os.path.join(LOG_DIR, "test_utils.log")
+        for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
+            os.remove(fil)
+        fplog("test", "AUDIT", "extra")
+        fplog("test", "CONTACTS", "extra")
+        fplog("test", "CONTACTS", "extra")
+        fplog("test", "AUDIT", "extra")
+        fplog("test", "GROUPS", "extra")
+        lines = [ln for ln in get_lines_of(log_file_path)]
+        self.assertEqual(len(lines), 5)
+        lines = [ln for ln in get_lines_of(log_file_path, actions=("GROUPS",))]
+        self.assertEqual(len(lines), 1)
+        self.assertTrue(all("GROUPS" in ln for ln in lines))
+        lines = [ln for ln in get_lines_of(log_file_path, actions=("AUDIT", "CONTACTS"))]
+        self.assertEqual(len(lines), 4)
+        self.assertEqual(len([ln for ln in lines if "AUDIT" in ln]), 2)
+        self.assertEqual(len([ln for ln in lines if "CONTACTS" in ln]), 2)
 
     def test_get_logrotate_filenames(self):
         temp_dir = tempfile.mkdtemp()

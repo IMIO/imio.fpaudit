@@ -38,14 +38,17 @@ def get_all_lines_of(logfiles):
             yield line
 
 
-def get_lines_of(logfile):
+def get_lines_of(logfile, actions=()):
     """Generator for reversed log lines of a log file.
 
-    :param logfile: The path to the log file"""
-    # with open(logfile, "r") as file:
+    :param logfile: The path to the log file
+    :param actions: An action list to search_on"""
+    acts = [" action={}".format(act) for act in actions]
     with FileReadBackwards(logfile, encoding="utf-8") as file:
         for line in file:
-            yield line.strip("\n")
+            s_line = line.strip("\n")
+            if not actions or any(act in s_line for act in acts):
+                yield s_line
 
 
 def get_logrotate_filenames(directory, base_filename, suffix_regex=r"\.\d+$", full=True):
