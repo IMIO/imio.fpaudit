@@ -56,6 +56,7 @@ def get_lines_info(line, extras):
     for extra in extras:
         pattern += r" {}=(?P<{}>.+?)".format(extra, extra)
 
+    pattern += r"$"
     match = re.match(pattern, line)
     if match:
         dic = match.groupdict()
