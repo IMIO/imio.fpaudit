@@ -41,7 +41,7 @@ def store_config(logs_config):
             entry["log_id"],
             logformat=entry["log_format"],
         )
-        log_i.handler.formatter.datefmt = "%y-%m-%d %H:%M:%S"
+        log_i.handler.formatter.datefmt = "%Y-%m-%d %H:%M:%S"
         dic[entry["log_id"]] = log_i
     storage = getUtility(ILogsStorage)
     storage.set(dic)

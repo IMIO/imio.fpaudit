@@ -49,7 +49,7 @@ def get_lines_info(line, extras):
     dic = {}
     # 24-10-10 14:59:07 - user=admin ip=127.0.0.1 action=AUDIT col_a=xxxx col_b=yyy
     pattern = (
-        r"(?P<date>\d{2}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) - user=(?P<user>.+?) "
+        r"(?P<date>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) - user=(?P<user>.+?) "
         r"ip=(?P<ip>[\d\.]+|None) action=(?P<action>.+?)"
     )
 
