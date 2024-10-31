@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collective.fingerpointing.config import AUDIT_MESSAGE
 from collective.fingerpointing.utils import get_request_information
 from file_read_backwards import FileReadBackwards
 from imio.fpaudit.interfaces import ILogsStorage
@@ -13,6 +12,7 @@ import re
 
 
 logger = logging.getLogger("imio.fpaudit")
+AUDIT_MESSAGE = u'user={0} ip={1} action={2} {3}'
 
 
 def fplog(log_id, action, extras):
