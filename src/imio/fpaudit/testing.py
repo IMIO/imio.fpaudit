@@ -6,6 +6,7 @@ from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
+from zope.globalrequest.local import setLocal
 
 import imio.fpaudit
 import os
@@ -21,6 +22,7 @@ class ImioFPAuditLayer(PloneSandboxLayer):
         self.loadZCML(package=imio.fpaudit)
 
     def setUpPloneSite(self, portal):
+        setLocal("request", portal.REQUEST)  # to avoid error with empty request in P6
         applyProfile(portal, "imio.fpaudit:default")
         setRoles(portal, TEST_USER_ID, ["Manager"])
 
