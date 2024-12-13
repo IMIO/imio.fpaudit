@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from collective.z3cform.datagridfield import DataGridFieldFactory
+from collective.z3cform.datagridfield.datagridfield import DataGridFieldFactory
 from collective.z3cform.datagridfield.registry import DictRow
 from imio.fpaudit import _
 from imio.fpaudit.storage import store_config
