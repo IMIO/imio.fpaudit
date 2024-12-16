@@ -19,7 +19,7 @@ jobs:
             plone: 4.3
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up pyenv and Python
         uses: "gabrielfalcao/pyenv-action@v14"
         with:
@@ -66,9 +66,9 @@ jobs:
             plone: "6.0"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Set up pyenv and Python
-        uses: "gabrielfalcao/pyenv-action@v14"
+        uses: "gabrielfalcao/pyenv-action@2.4.20"
         with:
           default: "${{ matrix.python }}"
       - name: Setup Env
