@@ -62,7 +62,7 @@ jobs:
         run: |
           pip install --upgrade pip
           pip install -r requirements-${{matrix.plone}}.txt
-          pip install -U coveralls==3.3.1 coverage[toml]
+          pip install -U coveralls coverage[toml]
       - name: Cache eggs
         uses: actions/cache@v4
         env:
