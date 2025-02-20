@@ -14,7 +14,7 @@ long_description = (
 
 setup(
     name='imio.fpaudit',
-    version='0.1.0',
+    version='0.1.0.dev0',
     description="This package contains fingerpointing log audit helper.",
     long_description=long_description,
     # Get more from https://pypi.org/pypi?%3Aaction=list_classifiers
