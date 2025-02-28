@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.fingerpointing.utils import get_request_information
 from file_read_backwards import FileReadBackwards
+from imio.fpaudit import LOG_ENTRIES_REGISTRY
 from imio.fpaudit.interfaces import ILogsStorage
 from natsort import natsorted
 from plone import api
@@ -83,7 +84,7 @@ def get_log_option(log_id, option):
 
     :param log_id: The log id as defined in the configuration
     :param option: The option name"""
-    log_entries = api.portal.get_registry_record("imio.fpaudit.settings.log_entries", default=[])
+    log_entries = api.portal.get_registry_record(LOG_ENTRIES_REGISTRY, default=[])
     for entry in log_entries:
         if entry["log_id"] == log_id:
             return entry.get(option)

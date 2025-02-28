@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from imio.fpaudit import LOG_DIR
+from imio.fpaudit import LOG_ENTRIES_REGISTRY
 from imio.fpaudit.storage import store_config
 from imio.fpaudit.testing import clear_temp_dir
 from imio.fpaudit.testing import IMIO_FPAUDIT_INTEGRATION_TESTING
@@ -26,7 +27,7 @@ class TestUtils(unittest.TestCase):
 
     def test_fplog(self):
         api.portal.set_registry_record(
-            "imio.fpaudit.settings.log_entries",
+            LOG_ENTRIES_REGISTRY,
             [{"log_id": u"test", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}],
         )
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")
@@ -76,7 +77,7 @@ class TestUtils(unittest.TestCase):
 
     def test_get_lines_of(self):
         api.portal.set_registry_record(
-            "imio.fpaudit.settings.log_entries",
+            LOG_ENTRIES_REGISTRY,
             [{"log_id": u"test", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}],
         )
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")

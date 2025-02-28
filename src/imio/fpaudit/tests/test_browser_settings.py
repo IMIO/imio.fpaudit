@@ -1,3 +1,4 @@
+from imio.fpaudit import LOG_ENTRIES_REGISTRY
 from imio.fpaudit.browser.settings import IFPAuditSettings
 from imio.fpaudit.interfaces import ILogsStorage
 from imio.fpaudit.logger import FPAuditLogInfo
@@ -39,12 +40,12 @@ class TestSettings(unittest.TestCase):
 
     def test_settings_changed(self):
         """Check event"""
-        api.portal.set_registry_record("imio.fpaudit.settings.log_entries", [])
+        api.portal.set_registry_record(LOG_ENTRIES_REGISTRY, [])
         storage = getUtility(ILogsStorage)
         self.assertDictEqual(storage.storage, {})
         self.assertIsNone(storage.get("a"))
         api.portal.set_registry_record(
-            "imio.fpaudit.settings.log_entries",
+            LOG_ENTRIES_REGISTRY,
             [{"log_id": u"a", "audit_log": u"a.log", "log_format": u"%(asctime)s - %(message)s"}],
         )
         log_i = storage.get("a")

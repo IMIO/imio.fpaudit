@@ -15,3 +15,5 @@ else:  # test env
 LOG_DIR = BLDT_DIR
 if os.path.exists(os.path.join(BLDT_DIR, "var/log")):
     LOG_DIR = os.path.join(BLDT_DIR, "var/log")
+
+LOG_ENTRIES_REGISTRY = "imio.fpaudit.settings.log_entries"

@@ -17,6 +17,9 @@ Changelog
   [sgeulette]
 - Improved uninstall profile.
   [sgeulette]
+- Avoid test isolation problems by setting the default value of `log_entries`
+  during install.
+  [gbastien]
 
 0.1.0 (2025-02-20)
 ------------------
