@@ -2,8 +2,8 @@
    If you want to learn more about writing documentation, please check out: http://docs.plone.org/about/documentation_styleguide.html
    This text does not appear on PyPI or github. It is a comment.
 
-.. image:: https://github.com/imio/imio.fpaudit/actions/workflows/plone-package.yml/badge.svg
-    :target: https://github.com/imio/imio.fpaudit/actions/workflows/plone-package.yml
+.. image:: https://github.com/imio/imio.fpaudit/actions/workflows/main.yml/badge.svg
+    :target: https://github.com/imio/imio.fpaudit/actions/workflows/main.yml
 
 .. image:: https://coveralls.io/repos/github/imio/imio.fpaudit/badge.svg?branch=main
     :target: https://coveralls.io/github/imio/imio.fpaudit?branch=main
