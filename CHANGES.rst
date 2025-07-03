@@ -5,8 +5,8 @@ Changelog
 0.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Added Plone 6.1 version in buildout.
+ [chris-adam]
 
 0.1.2 (2025-03-12)
 ------------------
