@@ -5,7 +5,6 @@ from imio.helpers.security import get_zope_root
 from imio.helpers.security import set_site_from_package_config
 from plone import api
 
-import os
 import transaction
 
 
@@ -15,13 +14,10 @@ def zope_ready(event):
     site = set_site_from_package_config("imio.fpaudit", zope_app=zope_app)
     change = False
     if site:
-        if os.getenv("INSTANCE_HOME", "").endswith("/instance1") or os.getenv("INSTANCE_HOME", "").endswith(
-            "/instance"
-        ):
-            with api.env.adopt_user("admin"):
-                log_entries = api.portal.get_registry_record(LOG_ENTRIES_REGISTRY, default=[])
-                if log_entries:
-                    store_config(log_entries)
-                    change = True
+        with api.env.adopt_user("admin"):
+            log_entries = api.portal.get_registry_record(LOG_ENTRIES_REGISTRY, default=[])
+            if log_entries:
+                store_config(log_entries)
+                change = True
     if change:
         transaction.commit()
