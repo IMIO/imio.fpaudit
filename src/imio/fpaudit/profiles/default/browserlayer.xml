@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <layers>
-  <layer
-      name="imio.fpaudit"
-      interface="imio.fpaudit.interfaces.IImioFPAuditLayer"
-      />
+  <layer interface="imio.fpaudit.interfaces.IImioFPAuditLayer"
+         name="imio.fpaudit"
+  />
 </layers>

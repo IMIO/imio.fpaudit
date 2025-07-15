@@ -11,7 +11,6 @@ from zope.interface import implementer
 
 @implementer(INonInstallable)
 class HiddenProfiles(object):
-
     def getNonInstallableProfiles(self):
         """Hide uninstall profile from site-creation and quickinstaller."""
         return [
@@ -31,7 +30,7 @@ def post_install(context):
         try:
             registry[LOG_ENTRIES_REGISTRY] = []
         except ConnectionStateError:
-            logger.warn('!!!Failed to set registry log_entries to []!!!')
+            logger.warn("!!!Failed to set registry log_entries to []!!!")
             registry.records[LOG_ENTRIES_REGISTRY].field.value_type = None
 
 

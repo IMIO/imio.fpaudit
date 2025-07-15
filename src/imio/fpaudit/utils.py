@@ -13,7 +13,7 @@ import re
 
 
 logger = logging.getLogger("imio.fpaudit")
-AUDIT_MESSAGE = u'user={0} ip={1} action={2} {3}'
+AUDIT_MESSAGE = u"user={0} ip={1} action={2} {3}"
 
 
 def fplog(log_id, action, extras):
