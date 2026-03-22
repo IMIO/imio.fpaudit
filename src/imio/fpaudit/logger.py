@@ -5,6 +5,8 @@ import logging
 
 
 class FPAuditLogInfo(LogInfo):
+    """Can define a fingerpointing logger from a variable configuration."""
+
     def __init__(self, config, log_id, logformat=LOG_FORMAT):  # noqa
         self.logger = logging.getLogger("fpa_{}".format(log_id))
         self.logfile = None

@@ -7,6 +7,8 @@ Changelog
 
 - Added Plone 6.1 version in buildout.
  [chris-adam]
+- Refactored storage utility initialization without zope ready subscriber.
+  [sgeulette]
 
 0.1.2 (2025-03-12)
 ------------------
