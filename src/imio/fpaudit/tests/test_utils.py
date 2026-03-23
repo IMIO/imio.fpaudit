@@ -5,7 +5,7 @@ from imio.fpaudit.storage import store_config
 from imio.fpaudit.testing import clear_temp_dir
 from imio.fpaudit.testing import IMIO_FPAUDIT_INTEGRATION_TESTING
 from imio.fpaudit.testing import write_temp_files
-from imio.fpaudit.utils import fplog
+from imio.fpaudit.utils import fpalog
 from imio.fpaudit.utils import get_all_lines_of
 from imio.fpaudit.utils import get_lines_info
 from imio.fpaudit.utils import get_lines_of
@@ -25,7 +25,7 @@ class TestUtils(unittest.TestCase):
     def setUp(self):
         self.portal = self.layer["portal"]
 
-    def test_fplog(self):
+    def test_fpalog(self):
         api.portal.set_registry_record(
             LOG_ENTRIES_REGISTRY,
             [{"log_id": u"test", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}],
@@ -33,13 +33,13 @@ class TestUtils(unittest.TestCase):
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
-        fplog("test", "AUDIT", "extra 1")
+        fpalog("test", "AUDIT", "extra 1")
         logs = get_logrotate_filenames(LOG_DIR, "test_utils.log", r"\.\d+$")
         self.assertListEqual(logs, [log_file_path])
         lines = [ln for ln in get_lines_of(log_file_path)]
         self.assertEqual(len(lines), 1)
         self.assertTrue(lines[0].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 1"))
-        fplog("test", "AUDIT", "extra 2")
+        fpalog("test", "AUDIT", "extra 2")
         lines = [ln for ln in get_lines_of(log_file_path)]
         self.assertEqual(len(lines), 2)
         self.assertTrue(lines[0].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 2"))
@@ -49,8 +49,8 @@ class TestUtils(unittest.TestCase):
         os.rename(log_file_path, log_file_path1)
         # changed id to stop writing in rotated here
         store_config([{"log_id": u"test1", "audit_log": u"test_utils.log", "log_format": u"%(asctime)s - %(message)s"}])
-        fplog("test1", "AUDIT", "extra 3")
-        fplog("test1", "AUDIT", "extra 4")
+        fpalog("test1", "AUDIT", "extra 3")
+        fpalog("test1", "AUDIT", "extra 4")
         logs = get_logrotate_filenames(LOG_DIR, "test_utils.log", r"\.\d+$")
         lines = [ln for ln in get_all_lines_of(logs)]
         self.assertTrue(lines[0].endswith(" - user=test_user_1_ ip=None action=AUDIT extra 4"))
@@ -83,11 +83,11 @@ class TestUtils(unittest.TestCase):
         log_file_path = os.path.join(LOG_DIR, "test_utils.log")
         for fil in get_logrotate_filenames(LOG_DIR, "test_utils.log", r".+$"):
             os.remove(fil)
-        fplog("test", "AUDIT", "extra")
-        fplog("test", "CONTACTS", "extra")
-        fplog("test", "CONTACTS", "extra")
-        fplog("test", "AUDIT", "extra")
-        fplog("test", "GROUPS", "extra")
+        fpalog("test", "AUDIT", "extra")
+        fpalog("test", "CONTACTS", "extra")
+        fpalog("test", "CONTACTS", "extra")
+        fpalog("test", "AUDIT", "extra")
+        fpalog("test", "GROUPS", "extra")
         lines = [ln for ln in get_lines_of(log_file_path)]
         self.assertEqual(len(lines), 5)
         lines = [ln for ln in get_lines_of(log_file_path, actions=("GROUPS",))]

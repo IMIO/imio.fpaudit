@@ -9,6 +9,8 @@ Changelog
  [chris-adam]
 - Refactored storage utility initialization without zope ready subscriber.
   [sgeulette]
+- Renamed log method from utils.fplog to utils.fpalog to distinguish it from imio.helpers.security.fplog.
+  [sgeulette]
 
 0.1.2 (2025-03-12)
 ------------------

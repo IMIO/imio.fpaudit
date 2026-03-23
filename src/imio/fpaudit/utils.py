@@ -16,7 +16,7 @@ logger = logging.getLogger("imio.fpaudit")
 AUDIT_MESSAGE = u"user={0} ip={1} action={2} {3}"
 
 
-def fplog(log_id, action, extras):
+def fpalog(log_id, action, extras):
     """collective.fingerpointing add log message.
 
     :param log_id: The log id as defined in the configuration
@@ -29,6 +29,10 @@ def fplog(log_id, action, extras):
         log_i(AUDIT_MESSAGE.format(user, ip, action, extras))
     else:
         logger.info(AUDIT_MESSAGE.format(user, ip, action, extras))
+
+
+# backward compatibility
+fplog = fpalog
 
 
 def get_all_lines_of(logfiles, actions=()):
