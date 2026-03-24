@@ -10,7 +10,7 @@ long_description = open("README.rst").read() + "\n\n" + open("CHANGES.rst").read
 
 setup(
     name="imio.fpaudit",
-    version="0.1.3",
+    version="0.1.4.dev0",
     description="This package contains fingerpointing log audit helper.",
     long_description=long_description,
     # Get more from https://pypi.org/pypi?%3Aaction=list_classifiers
