@@ -6,7 +6,7 @@ Changelog
 ------------------
 
 - Added Plone 6.1 version in buildout.
- [chris-adam]
+  [chris-adam]
 - Refactored storage utility initialization without zope ready subscriber.
   [sgeulette]
 - Renamed log method from utils.fplog to utils.fpalog to distinguish it from imio.helpers.security.fplog.
